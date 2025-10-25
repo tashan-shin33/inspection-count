@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>業務カウント</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css"
+      integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <header>
+      <h1>TODAY DATE</h1>
+    </header>
+
+    <div class="containerA">
+      <script>
+        var today = new Date();
+        var todayHtml = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+        document.write('<p class="date">' + todayHtml + '</p>');
+      </script>
+    </div>
+
+    <div class="indexA">
+      <h2 class="h2">作業時間測定</h2>
+    </div>
+
+    <div class="containerB">
+      <p id="timer">00:00:00</p>
+      <div>
+        <button id="start_stop" class="btn btn-lg btn-primary btn-danger">START</button>
+      </div>
+    </div>
+
+    <script>
+      let start;
+      let timer_id;
+      document.getElementById('start_stop').addEventListener('click', function () {
+        if (this.innerHTML === 'START') {
+          start = new Date();
+          timer_id = setInterval(goTimer, 10);
+
+          this.innerHTML = 'STOP';
+          this.classList.remove('btn-primary');
+          this.classList.add('btn-danger');
+        } else {
+          clearInterval(timer_id);
+          this.innerHTML = 'START';
+          this.classList.remove('btn-danger');
+          this.classList.add('btn-primary');
+        }
+      });
+
+      const addZero = function (value) {
+        if (value < 10) {
+          value = '0' + value;
+        } return value;
+      }
+
+      let hoursA; let minutesA;
+      const goTimer = function () {
+        var now = new Date();
+        var milli = now.getTime() - start.getTime();
+        var seconds = Math.floor(milli / 1000);
+        var minutes = Math.floor(seconds / 60);
+        var hours = Math.floor(minutes / 60);
+
+        seconds = seconds - minutes * 60;
+        minutes = minutes - hours * 60;
+
+        hours = addZero(hours);
+        minutes = addZero(minutes);
+        seconds = addZero(seconds);
+
+        document.getElementById('timer').innerHTML = hours + ":" + minutes + ":" + seconds;
+        hoursA = hours; minutesA = minutes;
+      }
+
+      document.getElementById('add-item').addEventListener('click', () => {
+        let timeSum = hoursA * 60 + inutesA + 1;
+        document.getElementById('inspection-time').innerHTML = timeSum;
+      })
+    </script>
+
+    <form id="inspection-form" class="form-container">
+
+      <div class="form_group">
+        <label for="model-name">型名:</label>
+        <select name="modelName" id="model-name" required>
+          <option value=""></option>
+          <option value="Redan">11R</option>
+          <option value="Cape">13C</option>
+        </select>
+      </div>
+
+
+      <div class="form_group">
+        <label for="inspection-name">検査名:</label>
+        <select name="inspection" id="inspection-name" required>
+          <option value=""></option>
+          <option value="A">A</option>
+          <option value="B">B</option>
+          <option value="C">C</option>
+          <option value="D">D</option>
+          <option value="E">E</option>
+          <option value="F">F</option>
+          <option value="G">G</option>
+
+        </select>
+      </div>
+
+      <div class="form_group">
+        <label for="operator-name">作業人数:</label>
+        <select name="人数" id="operator-name" required>
+          <option value=""></option>
+          <option value="1">ひとり</option>
+          <option value="2">ふたり</option>
+          <option value="3">さんにん</option>
+          <option value="4">よにん</option>
+          <option value="5">ごにん</option>
+        </select>
+      </div>
+
+      <div class="form_group">
+        <label for="total-count">検査台数:</label>
+        <input type="number" id="total-count" required><br>
+      </div>
+
+      <div class="form_group">
+        <label for="inspection-time">検査時間 (分):</label>
+        <input type="number" id="inspection-time" required><br>
+      </div>
+
+      <div class="button-containe">
+        <button id="add-item" type="submit" value="追加">追加</button>
+      </div>
+
+    </form>
+
+    <div class="iti_tyousei">
+      <table>
+        <thead>
+          <tr>
+            <th>型名</th>
+            <th>検査名</th>
+            <th>作業者人数</th>
+            <th>検査台数</th>
+            <th>検査時間 (分)</th>
+          </tr>
+        </thead>
+        <tbody id="data-rows"></tbody>
+        <tfoot>
+          <tr id="total-row">
+            <td>合計</td>
+            <td>_</td>
+            <td id="total-operator-cell">0</td>
+            <td id="total-count-cell">0</td>
+            <td id="total-time-cell">0</td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <script>
+      document.getElementById('inspection-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // 入力値を取得
+        var model = document.getElementById('model-name').value;
+        var modelName = document.getElementById('inspection-name').value;
+        var operatorName = document.getElementById('operator-name').value;
+        var operatorCount = parseInt(document.getElementById('operator-name').value);
+        var totalCount = parseInt(document.getElementById('total-count').value);
+        var inspectionTime = parseInt(document.getElementById('inspection-time').value);
+
+        // データをテーブルに追加
+        var dataRows = document.getElementById('data-rows');
+        var newRow = dataRows.insertRow(-1);
+        newRow.insertCell(0).textContent = model;
+        newRow.insertCell(1).textContent = modelName;
+        newRow.insertCell(2).textContent = operatorName;
+        newRow.insertCell(3).textContent = totalCount;
+        newRow.insertCell(4).textContent = inspectionTime;
+
+        // 合計を更新
+        var totalOperatorCell = document.getElementById('total-operator-cell');
+        var totalCountCell = document.getElementById('total-count-cell');
+        var totalTimeCell = document.getElementById('total-time-cell');
+        totalOperatorCell.textContent = parseInt(totalOperatorCell.textContent) + operatorCount;
+        totalCountCell.textContent = parseInt(totalCountCell.textContent) + totalCount;
+        totalTimeCell.textContent = parseInt(totalTimeCell.textContent) + inspectionTime;
+
+        // 入力フィールドをクリア
+        document.getElementById('model-name').value = '';
+        document.getElementById('inspection-name').value = '';
+        document.getElementById('operator-name').value = '';
+        document.getElementById('total-count').value = '';
+        document.getElementById('inspection-time').value = '';
+      });
+    </script>
+  </body>
+
+</html>
+
+
+
+
+
+
+<div class="container1">
+  <div class="cnt">
+    不良名1:<input type="text" id="bad-name1">
+    <p id="counter1" class="count">0</p>
+    <button id="countUpButton1" type="button" name="sheetcut" class="kak" placeholder="不良名">不良名１</button>
+    <button id="resetButton1" type="button" name="リセットA" class="kak" placeholder="リセット1">リセット1</button>
+  </div>
+
+  <div class="cnt">
+    不良名2:<input type="text" id="bad-name2">
+    <p id="counter2" class="count">0</p>
+    <button id="countUpButton2" type="button" name="dai-cut" class="kak" placeholder="不良名2">不良名2</button>
+    <button id="resetButton2" type="button" name="リセットB" class="kak" placeholder="リセット2">リセット2</button>
+  </div>
+
+  <div class="cnt">
+    不良名3:<input type="text" id="bad-name3">
+    <p id="counter3" class="count">0</p>
+    <button id="countUpButton3" type="button" name="dai-impurity" class="kak" placeholder="不良名3">不良名3</button>
+    <button id="resetButton3" type="button" name="リセットC" class="kak" placeholder="リセット3">リセット3</button>
+  </div>
+
+
+</div>
+
+<script>
+  'use strict';
+  let num1 = 0;
+  function countUp1() {
+    num1++;
+    const cnt1 = document.getElementById('counter1');
+    cnt1.textContent = num1;
+  }
+  function reset1() {
+    num1 = 0;
+    const counterA = document.getElementById('counter1');
+    counterA.textContent = num1;
+  }
+  const countUpBtn1 = document.getElementById('countUpButton1');
+  countUpBtn1.addEventListener('click', countUp1, false);
+
+  const resetBtn1 = document.getElementById('resetButton1');
+  resetBtn1.addEventListener('click', reset1, false);
+
+
+  let num2 = 0;
+  function countUp2() {
+    num2++;
+    const cnt2 = document.getElementById('counter2');
+    cnt2.textContent = num2;
+  }
+  function reset2() {
+    num2 = 0;
+    const counterB = document.getElementById('counter2');
+    counterB.textContent = num2;
+  }
+  const countUpBtn2 = document.getElementById('countUpButton2');
+  countUpBtn2.addEventListener('click', countUp2, false);
+
+  const resetBtn2 = document.getElementById('resetButton2');
+  resetBtn2.addEventListener('click', reset2, false);
+
+
+  let num3 = 0;
+  function countUp3() {
+    num3++;
+    const cnt3 = document.getElementById('counter3');
+    cnt3.textContent = num3;
+  }
+  function reset3() {
+    num3 = 0;
+    const counterC = document.getElementById('counter3');
+    counterC.textContent = num3;
+  }
+  const countUpBtn3 = document.getElementById('countUpButton3');
+  countUpBtn3.addEventListener('click', countUp3, false);
+
+  const resetBtn3 = document.getElementById('resetButton3');
+  resetBtn3.addEventListener('click', reset3, false);
+
+
+  let num4 = 0;
+  function countUp4() {
+    num4++;
+    const cnt3 = document.getElementById('counter4');
+    cnt3.textContent = num4;
+  }
+  function reset4() {
+    num4 = 0;
+    const counterC = document.getElementById('counter4');
+    counterC.textContent = num4;
+  }
+  const countUpBtn4 = document.getElementById('countUpButton4');
+  countUpBtn4.addEventListener('click', countUp4, false);
+
+  const resetBtn4 = document.getElementById('resetButton4');
+  resetBtn4.addEventListener('click', reset4, false);
+</script>
+
+<div class="memo1">
+  <textarea name="message" placeholder="メモに使用してください" rows="20" cols="150"></textarea>
+</div>
+</body>
+
+</html>
