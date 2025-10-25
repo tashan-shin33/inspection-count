@@ -1,0 +1,278 @@
+body {
+  font-family: Arial;
+  text-align: center;
+}
+
+header {
+  margin-top: 0;
+  margin-bottom: 100px;
+}
+
+h1 {
+  width: 1200px;
+  margin: 0 auto;
+  background-color: #000;
+  color: #fff;
+  padding: 20px;
+  font-size: 18px;
+}
+
+.h2 {
+  margin-top: 150px;
+  margin-bottom: -50px;
+}
+
+.indexA {
+  margin: -20px auto;
+}
+
+.date {
+  font-size: 300%;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.containerA {
+  text-align: center;
+  margin-top: -30px;
+  margin: -50px auto;
+  padding: -30px;
+}
+
+.containerB {
+  text-align: center;
+  margin: -10px auto;
+  padding-top: 20px;
+}
+
+#timer {
+  width: 100%;
+  font-size: 36px;
+  border: 1px solid #ccc;
+  margin: 30px auto;
+  padding: 50px;
+  background-color: #000;
+  color: #fff;
+  border-radius: 3px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, .5);
+}
+
+.btn {
+  width: 100%;
+  height: 50px;
+}
+
+.kankaku {
+  width: 500px;
+  height: 300px;
+  text-align: center;
+}
+
+.kankaku1 {
+  text-align: center;
+}
+
+/*table {
+  display: inline-table;
+  width: 100%;
+  text-align: center;
+}*/
+
+form {
+  margin: 70px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.kak {
+  display: flex;
+  background-color: #f1eac3;
+  padding: 10px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 5px;
+  border: none;
+}
+
+.timeentry {
+  margin: 50px;
+  padding: 50px;
+}
+
+.entrytext {
+  margin: 10px;
+}
+
+.entrytext2 {
+  width: 220px;
+  margin: 0 40px 20px;
+}
+
+.entrytext1 {
+  width: 140px;
+  margin: 0 40px 20px;
+}
+
+.numarea {
+  width: 40px;
+  margin: 0 40px 20px;
+}
+
+.numarea1 {
+  width: 140px;
+  margin: 0 40px 20px;
+}
+
+.container1 {
+  display: flex;
+  justify-content: space-between;
+  margin: 60px;
+  padding: 30px;
+}
+
+#countUpButton1 {
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+#countUpButton2 {
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+#countUpButton3 {
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+
+button {
+  margin: 0 0 0 80px;
+  padding: 3px 15px;
+}
+
+.count {
+  font-size: 30px;
+}
+
+.container2 {
+  display: flex;
+  justify-content: space-around;
+  margin: 60px;
+  padding: 30px;
+}
+
+.container3 {
+  margin: 60px;
+  padding: 30px;
+}
+
+.sukima {
+  margin-bottom: 10px;
+}
+
+.timeentry {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+  margin-bottom: 50px;
+}
+
+.haiti {
+  text-align: center;
+}
+
+#myTable {
+  margin-left: 10px;
+}
+
+.entrytext2 {
+  width: 300px;
+}
+
+
+//ChatGptコード追加
+table {
+  border-collapse: collapse;
+  width: 600px;
+}
+
+th,
+td {
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+}
+
+#total-row {
+  font-weight: bold;
+}
+
+.iti_tyousei {
+  margin-top: 50px;
+  margin-left: 400px;
+}
+
+.form_group {
+  margin-bottom: 10px;
+  /* ラベルと入力フィールドの間隔を調整 */
+  display: flex;
+  flex-direction: column;
+  /* ラベルと入力フィールドを縦に配置 */
+  margin-bottom: 10px;
+  width: 150px;
+  height: 40px;
+}
+
+.form_group label {
+  margin-bottom: 5px;
+  /* ラベルの下部の余白を調整 */
+}
+
+.form_groupA {
+  display: inline-block;
+}
+
+.form-container {
+  align-items: center;
+  justify-content: center;
+  height: 20vh;
+  /* ビューポートの高さいっぱいに表示 */
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+#add-item {
+  width: 110px;
+  height: 30px;
+  margin: 30px 0 0 20px;
+}
+
+#add-item:hover {
+  width: 110px;
+  height: 30px;
+  background-color: aquamarine;
+  cursor: pointer;
+}
+
+#counter1 {
+  margin-top: 20px;
+}
+
+#counter2 {
+  margin-top: 20px;
+}
+
+#counter3 {
+  margin-top: 20px;
+}
+
+#start_stop {
+  margin: 0 auto;
+  width: 1200px;
+}
+
+textarea {
+  margin: 0 auto 50px;
+}
